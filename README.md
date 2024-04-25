@@ -1,16 +1,8 @@
 # expense_tracker_2024
 
-A new Flutter project.
+An expense tracker app developed using flutter.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Developed using
+Architecture : MVVM Architecture
+State Management Tool : Provider state management
+Data handling : Hive local database
