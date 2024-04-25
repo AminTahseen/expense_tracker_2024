@@ -8,7 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class AddCategorySheet extends StatefulWidget {
-  const AddCategorySheet({super.key});
+  final CategoryViewModel categoryViewModel;
+  const AddCategorySheet({super.key, required this.categoryViewModel});
 
   @override
   State<AddCategorySheet> createState() => _AddCategorySheetState();
@@ -19,7 +20,7 @@ class _AddCategorySheetState extends State<AddCategorySheet> {
       TextEditingController();
   @override
   Widget build(BuildContext context) {
-    CategoryViewModel categoryViewModel = context.watch<CategoryViewModel>();
+    final categoryViewModel = widget.categoryViewModel;
 
     return SingleChildScrollView(
       child: Container(

@@ -1,6 +1,7 @@
 import 'package:expense_tracker_2024/model/category_model.dart';
 import 'package:expense_tracker_2024/repositoryImpl/local/category_repo_impl.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 class CategoryViewModel extends ChangeNotifier {
@@ -28,6 +29,10 @@ class CategoryViewModel extends ChangeNotifier {
   setErrorMessage(String message) async {
     _errorMessage = message;
     notifyListeners();
+  }
+
+  Box<CategoryModel> getCategories() {
+    return categoryRepo.getData();
   }
 
   createCategory(String categoryName) async {

@@ -34,7 +34,7 @@ class TotalBalanceBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Total Balance",
+              "Total Available Balance",
               style: GoogleFonts.lato(
                 fontSize: 14,
                 color: Colors.white,

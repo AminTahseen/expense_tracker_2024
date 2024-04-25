@@ -2,6 +2,8 @@ import 'package:expense_tracker_2024/constants/colors.dart';
 import 'package:expense_tracker_2024/navigator/navigator.dart';
 import 'package:expense_tracker_2024/view/screens/accounts.dart';
 import 'package:expense_tracker_2024/view/screens/categories.dart';
+import 'package:expense_tracker_2024/view/screens/coming_soon.dart';
+import 'package:expense_tracker_2024/view/widgets/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,9 +20,6 @@ class AppNavigationDrawer extends StatelessWidget {
       child: Scaffold(
         backgroundColor: MAIN_APP_COLOR_LIGHT_SHADE,
         body: Center(
-          // Add a ListView to the drawer. This ensures the user can scroll
-          // through the options in the drawer if there isn't enough vertical
-          // space to fit everything.
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.5,
             child: ListView(
@@ -47,46 +46,22 @@ class AppNavigationDrawer extends StatelessWidget {
                 DrawerItem(
                   drawerIcon: Icons.currency_exchange,
                   drawerText: "All Transactions",
-                  itemClick: () {
-                    ZoomDrawer.of(context)!.close();
-                    AppNavigator().onNavigatePush(
-                      context,
-                      const AccountsScreen(),
-                    );
-                  },
+                  itemClick: () => _navigate(const ComingSoonScreen(), context),
                 ),
                 DrawerItem(
                   drawerIcon: Icons.category,
                   drawerText: "All Categories",
-                  itemClick: () {
-                    ZoomDrawer.of(context)!.close();
-                    AppNavigator().onNavigatePush(
-                      context,
-                      const CategoriesScreen(),
-                    );
-                  },
+                  itemClick: () => _navigate(const CategoriesScreen(), context),
                 ),
                 DrawerItem(
                   drawerIcon: Icons.alarm_add,
                   drawerText: "All Reminders",
-                  itemClick: () {
-                    ZoomDrawer.of(context)!.close();
-                    AppNavigator().onNavigatePush(
-                      context,
-                      const CategoriesScreen(),
-                    );
-                  },
+                  itemClick: () => _navigate(const ComingSoonScreen(), context),
                 ),
                 DrawerItem(
                   drawerIcon: Icons.person,
                   drawerText: "All Accounts",
-                  itemClick: () {
-                    ZoomDrawer.of(context)!.close();
-                    AppNavigator().onNavigatePush(
-                      context,
-                      const AccountsScreen(),
-                    );
-                  },
+                  itemClick: () => _navigate(const AccountsScreen(), context),
                 ),
               ],
             ),
@@ -95,6 +70,11 @@ class AppNavigationDrawer extends StatelessWidget {
       ),
     );
   }
+}
+
+_navigate(Widget screenName, BuildContext context) {
+  ZoomDrawer.of(context)!.close();
+  AppNavigator().onNavigatePush(context, screenName);
 }
 
 class DrawerItem extends StatelessWidget {

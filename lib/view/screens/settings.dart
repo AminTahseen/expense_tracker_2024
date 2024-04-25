@@ -1,7 +1,12 @@
+import 'dart:ui';
+
 import 'package:expense_tracker_2024/constants/colors.dart';
+import 'package:expense_tracker_2024/helpers/helpers.dart';
 import 'package:expense_tracker_2024/view/widgets/spacing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -32,9 +37,98 @@ class SettingsScreen extends StatelessWidget {
           ),
           const AddSpacing(),
           const ProfileDetails(),
-          const SignInWithGoogle()
+          const SignInWithGoogle(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10, left: 10),
+              child: ListView(
+                padding: const EdgeInsets.only(top: 10),
+                children: const [
+                  SettingsListItem(
+                    name: "change currency",
+                    icon: Icons.travel_explore,
+                    showSeperator: true,
+                    showTrailing: true,
+                    trailingText: "PKR",
+                  ),
+                  SettingsListItem(
+                    name: "backup data",
+                    icon: Icons.backup,
+                    showSeperator: true,
+                    showTrailing: false,
+                  ),
+                  SettingsListItem(
+                    name: "restore data",
+                    icon: Icons.restore,
+                    showSeperator: false,
+                    showTrailing: false,
+                  )
+                ],
+              ),
+            ),
+          ),
         ],
       ),
+    );
+  }
+}
+
+class SettingsListItem extends StatelessWidget {
+  final String name;
+  final IconData icon;
+  final bool showSeperator;
+  final bool showTrailing;
+  final String? trailingText;
+  const SettingsListItem({
+    super.key,
+    required this.name,
+    required this.icon,
+    required this.showSeperator,
+    required this.showTrailing,
+    this.trailingText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
+          child: ListTile(
+            leading: Icon(
+              icon,
+              color: MAIN_APP_COLOR_DARK,
+            ),
+            title: Text(
+              name.capitalize(),
+              style: GoogleFonts.lato(
+                fontSize: 16,
+                color: const Color.fromARGB(255, 92, 91, 91),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            trailing: showTrailing
+                ? Text(
+                    trailingText.toString(),
+                    style: GoogleFonts.lato(
+                      color: MAIN_APP_COLOR_DARK,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                : null,
+          ),
+        ),
+        showSeperator
+            ? Container(
+                width: MediaQuery.of(context).size.width,
+                height: 1,
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 182, 180, 180),
+                ),
+              )
+            : const AddSpacing(),
+      ],
     );
   }
 }
@@ -45,7 +139,7 @@ class SignInWithGoogle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white60,

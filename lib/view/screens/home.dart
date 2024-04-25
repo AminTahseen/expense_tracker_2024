@@ -1,5 +1,6 @@
 import 'package:expense_tracker_2024/constants/colors.dart';
 import 'package:expense_tracker_2024/helpers/helpers.dart';
+import 'package:expense_tracker_2024/model/accounts_model.dart';
 import 'package:expense_tracker_2024/model/transaction_model.dart';
 import 'package:expense_tracker_2024/view/widgets/app_bar.dart';
 import 'package:expense_tracker_2024/view/widgets/expense_income_box.dart';
@@ -7,6 +8,7 @@ import 'package:expense_tracker_2024/view/widgets/quick_actions.dart';
 import 'package:expense_tracker_2024/view/widgets/recent_transactions.dart';
 import 'package:expense_tracker_2024/view/widgets/spacing.dart';
 import 'package:expense_tracker_2024/view/widgets/total_balance_box.dart';
+import 'package:expense_tracker_2024/viewModel/accounts_view_model.dart';
 import 'package:expense_tracker_2024/viewModel/transaction_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -26,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     TransactionViewModel transactionViewModel =
         context.watch<TransactionViewModel>();
+    AccountsViewModel accountsViewModel = context.watch<AccountsViewModel>();
     var size, width;
     size = MediaQuery.of(context).size;
     width = size.width;
@@ -44,13 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           const AddSpacing(),
-          ValueListenableBuilder<Box<TransactionModel>>(
-            valueListenable:
-                transactionViewModel.getTransactions().listenable(),
+          ValueListenableBuilder<Box<AccountsModel>>(
+            valueListenable: accountsViewModel.getAccounts().listenable(),
             builder: (context, box, _) {
-              var data = box.values.toList().cast<TransactionModel>();
+              var data = box.values.toList().cast<AccountsModel>();
               double sum = data
-                  .map((transaction) => transaction.amount)
+                  .map((transaction) => transaction.openingBalance)
                   .fold(0, (previous, current) => previous + current);
               return TotalBalanceBox(amount: sum);
             },

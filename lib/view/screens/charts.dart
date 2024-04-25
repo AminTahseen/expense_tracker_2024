@@ -1,5 +1,6 @@
 import 'package:expense_tracker_2024/constants/colors.dart';
 import 'package:expense_tracker_2024/model/UIObjects/bar_data.dart';
+import 'package:expense_tracker_2024/view/widgets/no_data_available.dart';
 import 'package:expense_tracker_2024/view/widgets/spacing.dart';
 import 'package:expense_tracker_2024/view/widgets/tab_item.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -98,50 +99,53 @@ class ChartSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          width: MediaQuery.of(context).size.width,
-          margin:
-              const EdgeInsets.only(left: 10, right: 20, top: 10, bottom: 20),
-          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-          height: 310,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 250,
-                child: BarChartIncomeExpense(
-                  summary: [10.40, 20.50, 42.50, 90.30, 60.40],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            width: MediaQuery.of(context).size.width,
+            margin:
+                const EdgeInsets.only(left: 10, right: 20, top: 10, bottom: 20),
+            padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+            height: 310,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 250,
+                  child: BarChartIncomeExpense(
+                    summary: [10.40, 20.50, 42.50, 90.30, 60.40],
+                  ),
                 ),
-              ),
-              const AddSpacing(),
-              Text(
-                chartType == 0 ? "Income Breakdown" : "Expense Breakdown",
-                style: GoogleFonts.lato(
-                  color: TEXT_GREY_DARK,
-                ),
-              )
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-          child: Text(
-            "Categories",
-            style: GoogleFonts.lato(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: TEXT_GREY_DARK,
+                const AddSpacing(),
+                Text(
+                  chartType == 0 ? "Income Breakdown" : "Expense Breakdown",
+                  style: GoogleFonts.lato(
+                    color: TEXT_GREY_DARK,
+                  ),
+                )
+              ],
             ),
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0, left: 20.0),
+            child: Text(
+              "Categories",
+              style: GoogleFonts.lato(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: TEXT_GREY_DARK,
+              ),
+            ),
+          ),
+          const NoDataAvailable(message: "No Categories Yet")
+        ],
+      ),
     );
   }
 }
@@ -171,7 +175,7 @@ class BarChartIncomeExpense extends StatelessWidget {
                 barRods: [
                   BarChartRodData(
                       toY: data.y,
-                      color: MAIN_APP_COLOR,
+                      color: MAIN_APP_COLOR_DARK,
                       width: 12,
                       borderRadius: BorderRadius.circular(5))
                 ],

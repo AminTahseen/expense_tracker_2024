@@ -23,7 +23,10 @@ class TransactionItem extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: const Color.fromARGB(255, 237, 235, 235),
-        child: Icon(icon),
+        child: Icon(
+          icon,
+          color: MAIN_APP_COLOR_DARK,
+        ),
       ),
       title: Text(
         category,

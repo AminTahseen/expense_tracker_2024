@@ -13,9 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HistoryScreen extends StatefulWidget {
-  final VoidCallback onAddClick;
-
-  const HistoryScreen({super.key, required this.onAddClick});
+  const HistoryScreen({super.key});
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();

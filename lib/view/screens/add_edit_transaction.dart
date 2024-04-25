@@ -2,6 +2,7 @@ import 'package:expense_tracker_2024/constants/colors.dart';
 import 'package:expense_tracker_2024/model/accounts_model.dart';
 import 'package:expense_tracker_2024/navigator/navigator.dart';
 import 'package:expense_tracker_2024/view/widgets/account_selection.dart';
+import 'package:expense_tracker_2024/view/widgets/no_data_available.dart';
 import 'package:expense_tracker_2024/view/widgets/snackbar_messages.dart';
 import 'package:expense_tracker_2024/view/widgets/spacing.dart';
 import 'package:expense_tracker_2024/view/widgets/transaction_type.dart';
@@ -185,13 +186,7 @@ class _AddEditTransactionState extends State<AddEditTransaction> {
                                   );
                                 },
                               )
-                            : Center(
-                                child: Text(
-                                  "No Accounts Yet",
-                                  style: GoogleFonts.lato(
-                                      color: TEXT_GREY_DARK, fontSize: 20),
-                                ),
-                              );
+                            : const NoDataAvailable(message: "No Accounts Yet");
                       },
                     ),
                   ),
@@ -204,23 +199,24 @@ class _AddEditTransactionState extends State<AddEditTransaction> {
                     ),
                   ),
                   const AddSpacing(),
-                  SizedBox(
-                    height: 100,
-                    child: ListView(
-                      itemExtent: 80.0,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        AccountSelection(
-                          index: 0,
-                          selectedIndex: 0,
-                          icon: Icons.category,
-                          accountName: "Category 1",
-                          getSelectedIndex: (p0) {},
-                        ),
-                      ],
-                    ),
-                  ),
+                  const NoDataAvailable(message: "No Categories Yet"),
+                  // SizedBox(
+                  //   height: 100,
+                  //   child: ListView(
+                  //     itemExtent: 80.0,
+                  //     shrinkWrap: true,
+                  //     scrollDirection: Axis.horizontal,
+                  //     children: [
+                  //       AccountSelection(
+                  //         index: 0,
+                  //         selectedIndex: 0,
+                  //         icon: Icons.category,
+                  //         accountName: "Category 1",
+                  //         getSelectedIndex: (p0) {},
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   const AddSpacing(),
                   Center(
                     child: loader

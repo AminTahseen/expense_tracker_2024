@@ -3,6 +3,7 @@ import 'package:expense_tracker_2024/model/accounts_model.dart';
 import 'package:expense_tracker_2024/navigator/navigator.dart';
 import 'package:expense_tracker_2024/view/widgets/account_item.dart';
 import 'package:expense_tracker_2024/view/widgets/add_account_sheet.dart';
+import 'package:expense_tracker_2024/view/widgets/no_data_available.dart';
 import 'package:expense_tracker_2024/viewModel/accounts_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -90,13 +91,7 @@ class _AccountsScreenState extends State<AccountsScreen> {
                           );
                         },
                       )
-                    : Center(
-                        child: Text(
-                          "No Accounts Yet",
-                          style: GoogleFonts.lato(
-                              color: TEXT_GREY_DARK, fontSize: 20),
-                        ),
-                      );
+                    : const NoDataAvailable(message: "No Accounts Available");
               },
             ),
           ),

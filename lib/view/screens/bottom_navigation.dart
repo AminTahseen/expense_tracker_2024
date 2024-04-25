@@ -17,7 +17,7 @@ class _BottomNavigationHolderState extends State<BottomNavigationHolder> {
 
   final List _pages = [
     const HomeScreen(),
-    HistoryScreen(onAddClick: () {}),
+    const HistoryScreen(),
     const ChartsScreen(),
     const SettingsScreen()
   ];
