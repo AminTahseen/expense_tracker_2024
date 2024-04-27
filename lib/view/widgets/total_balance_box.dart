@@ -1,7 +1,6 @@
 import 'package:expense_tracker_2024/constants/colors.dart';
 import 'package:expense_tracker_2024/helpers/helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TotalBalanceBox extends StatelessWidget {
@@ -21,8 +20,8 @@ class TotalBalanceBox extends StatelessWidget {
             MAIN_APP_COLOR_DARK,
             MAIN_APP_COLOR_DARK_DIFF,
           ],
-          begin: const FractionalOffset(0.0, 0.0),
-          end: const FractionalOffset(1.0, 0.0),
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
           stops: const [0.0, 1.0],
           tileMode: TileMode.clamp,
         ),

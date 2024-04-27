@@ -2,6 +2,7 @@ import 'package:expense_tracker_2024/constants/constants.dart';
 import 'package:expense_tracker_2024/model/accounts_model.dart';
 import 'package:expense_tracker_2024/model/category_model.dart';
 import 'package:expense_tracker_2024/model/transaction_model.dart';
+import 'package:expense_tracker_2024/view/screens/splash.dart';
 import 'package:expense_tracker_2024/view/screens/zoom_drawer_screen.dart';
 import 'package:expense_tracker_2024/viewModel/accounts_view_model.dart';
 import 'package:expense_tracker_2024/viewModel/category_view_model.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
           useMaterial3: true,
         ),
-        home: const ZoomDrawerScreen(),
+        home: const SplashScreen(),
       ),
     );
   }
