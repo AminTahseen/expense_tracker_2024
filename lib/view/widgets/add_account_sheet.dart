@@ -1,4 +1,5 @@
 import 'package:expense_tracker_2024/constants/colors.dart';
+import 'package:expense_tracker_2024/helpers/helpers.dart';
 import 'package:expense_tracker_2024/view/widgets/snackbar_messages.dart';
 import 'package:expense_tracker_2024/view/widgets/spacing.dart';
 import 'package:expense_tracker_2024/viewModel/accounts_view_model.dart';
@@ -23,21 +24,16 @@ class _AddAccountSheetState extends State<AddAccountSheet> {
   @override
   Widget build(BuildContext context) {
     final accountsViewModel = widget.accountsViewModel;
-    return SingleChildScrollView(
+    return Form(
       child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(30)),
+        height: (MediaQuery.of(context).size.height * 0.5) +
+            MediaQuery.of(context).viewInsets.bottom,
         padding: const EdgeInsets.all(20.0),
-        height: MediaQuery.of(context).size.height * 0.6,
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Icon(
-                  Icons.close,
-                  color: Colors.white,
-                ),
                 Text(
                   "New Account",
                   style: GoogleFonts.lato(
@@ -55,38 +51,34 @@ class _AddAccountSheetState extends State<AddAccountSheet> {
             ),
             const AddSpacing(),
             const AddSpacing(),
-            Focus(
-              child: TextField(
-                controller: accountNameTextController,
-                scrollPadding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  fillColor: Colors.red.shade50,
-                  filled: true,
-                  label: Text("Account Name",
-                      style: GoogleFonts.lato(fontWeight: FontWeight.bold)),
-                ),
+            TextField(
+              controller: accountNameTextController,
+              scrollPadding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              decoration: InputDecoration(
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                fillColor: Colors.red.shade50,
+                filled: true,
+                label: Text("Account Name",
+                    style: GoogleFonts.lato(fontWeight: FontWeight.bold)),
               ),
             ),
             const AddSpacing(),
-            Focus(
-              child: TextField(
-                controller: openingBalanceTextController,
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                  signed: true,
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  fillColor: Colors.red.shade50,
-                  filled: true,
-                  label: Text(
-                    "Opening Balance",
-                    style: GoogleFonts.lato(fontWeight: FontWeight.bold),
-                  ),
+            TextField(
+              controller: openingBalanceTextController,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+                signed: true,
+              ),
+              decoration: InputDecoration(
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                fillColor: Colors.red.shade50,
+                filled: true,
+                label: Text(
+                  "Opening Balance",
+                  style: GoogleFonts.lato(fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -104,7 +96,7 @@ class _AddAccountSheetState extends State<AddAccountSheet> {
                 ),
                 onPressed: () {
                   accountsViewModel.createAccount(
-                    accountNameTextController.text,
+                    accountNameTextController.text.capitalize(),
                     openingBalanceTextController.text,
                   );
                   final errorMessage = accountsViewModel.errorMessage;

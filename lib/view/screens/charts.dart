@@ -54,7 +54,10 @@ class _ChartsScreenState extends State<ChartsScreen>
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 color: Colors.white54,
                 border: Border.fromBorderSide(
-                  BorderSide(color: Colors.grey, width: 1),
+                  BorderSide(
+                    color: Color.fromARGB(188, 158, 158, 158),
+                    width: 1,
+                  ),
                 ),
               ),
               child: TabBar(

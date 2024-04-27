@@ -19,10 +19,12 @@ class CategoriesListSection extends StatelessWidget {
     return ValueListenableBuilder<Box<CategoryModel>>(
       valueListenable: categoryViewModel.getCategories().listenable(),
       builder: (context, box, _) {
-        var data = box.values
+        var data2 = box.values
             .where((element) => element.categoryType == categoryType)
             .toList()
             .cast<CategoryModel>();
+        var data = data2.reversed.toList().cast<CategoryModel>();
+
         return data.isNotEmpty
             ? CategoryList(data: data)
             : const NoDataAvailable(message: "No Categories Available");
@@ -39,12 +41,12 @@ class CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: const EdgeInsets.all(0),
       itemCount: data.length,
       itemBuilder: (context, index) {
         return CategoryItem(
-          categoryId: data[index].categoryId,
           categoryName: data[index].categoryName,
-          icon: Icons.category,
+          categoryId: data[index].categoryId,
         );
       },
     );

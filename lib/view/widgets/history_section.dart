@@ -50,7 +50,7 @@ class HistorySection extends StatelessWidget {
                     itemCount: data.length,
                     itemBuilder: (context, index) {
                       return TransactionItem(
-                        category: data[index].accountName,
+                        category: data[index].categoryName,
                         amount: data[index].amount,
                         icon: Icons.currency_exchange_rounded,
                         type: data[index].transactionType,

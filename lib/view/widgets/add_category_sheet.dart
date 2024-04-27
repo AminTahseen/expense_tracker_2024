@@ -1,4 +1,5 @@
 import 'package:expense_tracker_2024/constants/colors.dart';
+import 'package:expense_tracker_2024/helpers/helpers.dart';
 import 'package:expense_tracker_2024/view/widgets/snackbar_messages.dart';
 import 'package:expense_tracker_2024/view/widgets/spacing.dart';
 import 'package:expense_tracker_2024/view/widgets/transaction_type.dart';
@@ -8,8 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class AddCategorySheet extends StatefulWidget {
-  final CategoryViewModel categoryViewModel;
-  const AddCategorySheet({super.key, required this.categoryViewModel});
+  const AddCategorySheet({super.key});
 
   @override
   State<AddCategorySheet> createState() => _AddCategorySheetState();
@@ -20,7 +20,7 @@ class _AddCategorySheetState extends State<AddCategorySheet> {
       TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final categoryViewModel = widget.categoryViewModel;
+    CategoryViewModel categoryViewModel = context.watch<CategoryViewModel>();
 
     return SingleChildScrollView(
       child: Container(
@@ -107,7 +107,7 @@ class _AddCategorySheetState extends State<AddCategorySheet> {
                 ),
                 onPressed: () {
                   categoryViewModel.createCategory(
-                    categoryNameTextController.text,
+                    categoryNameTextController.text.capitalize(),
                   );
                   final errorMessage = categoryViewModel.errorMessage;
                   final successMessage = categoryViewModel.message;

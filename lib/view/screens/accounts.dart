@@ -5,9 +5,7 @@ import 'package:expense_tracker_2024/view/widgets/account_item.dart';
 import 'package:expense_tracker_2024/view/widgets/add_account_sheet.dart';
 import 'package:expense_tracker_2024/view/widgets/no_data_available.dart';
 import 'package:expense_tracker_2024/viewModel/accounts_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +23,7 @@ class _AccountsScreenState extends State<AccountsScreen> {
     AccountsViewModel accountsViewModel = context.watch<AccountsViewModel>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: APP_BG_WHITE,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -69,11 +68,7 @@ class _AccountsScreenState extends State<AccountsScreen> {
               ],
             ),
           ),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: 35.0,
-              maxHeight: MediaQuery.of(context).size.height * 0.6,
-            ),
+          Expanded(
             child: ValueListenableBuilder<Box<AccountsModel>>(
               valueListenable: accountsViewModel.getAccounts().listenable(),
               builder: (context, box, _) {
@@ -81,6 +76,7 @@ class _AccountsScreenState extends State<AccountsScreen> {
                 var data = data2.reversed.toList().cast<AccountsModel>();
                 return data.isNotEmpty
                     ? ListView.builder(
+                        padding: const EdgeInsets.all(0),
                         itemCount: box.length,
                         itemBuilder: (context, index) {
                           return AccountItem(

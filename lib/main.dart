@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:expense_tracker_2024/constants/constants.dart';
 import 'package:expense_tracker_2024/model/accounts_model.dart';
 import 'package:expense_tracker_2024/model/category_model.dart';

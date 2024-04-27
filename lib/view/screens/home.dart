@@ -12,7 +12,6 @@ import 'package:expense_tracker_2024/viewModel/accounts_view_model.dart';
 import 'package:expense_tracker_2024/viewModel/transaction_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 

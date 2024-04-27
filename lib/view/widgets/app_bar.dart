@@ -1,5 +1,8 @@
 import 'package:expense_tracker_2024/constants/colors.dart';
+import 'package:expense_tracker_2024/navigator/navigator.dart';
+import 'package:expense_tracker_2024/view/screens/coming_soon.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ExpenseAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -44,12 +47,18 @@ class ExpenseAppBar extends StatelessWidget implements PreferredSizeWidget {
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 40.0, bottom: 10.0),
-            child: Icon(
-              Icons.notifications_outlined,
-              color: Colors.white,
-              size: 30,
+          GestureDetector(
+            onTap: () => AppNavigator().onNavigatePush(
+              context,
+              const ComingSoonScreen(),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.only(top: 40.0, bottom: 10.0),
+              child: Icon(
+                Icons.notifications_outlined,
+                color: Colors.white,
+                size: 30,
+              ),
             ),
           )
         ],

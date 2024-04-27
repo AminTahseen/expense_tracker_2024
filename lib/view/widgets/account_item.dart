@@ -25,24 +25,27 @@ class AccountItem extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
           leading: CircleAvatar(
+            radius: 16,
             backgroundColor: MAIN_APP_COLOR_DARK,
             child: Icon(
               icon,
               color: Colors.white,
+              size: 20,
             ),
           ),
           title: Text(
             category,
             style: GoogleFonts.lato(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: MAIN_APP_COLOR),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: MAIN_APP_COLOR,
+            ),
           ),
           trailing: Text(
             numToCurrency(amount, '0'),
             style: GoogleFonts.lato(
               color: TEXT_GREY_DARK,
-              fontSize: 16,
+              fontSize: 14,
             ),
           ),
         ),

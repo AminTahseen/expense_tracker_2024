@@ -5,13 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CategoryItem extends StatelessWidget {
   final String categoryId;
-  final IconData icon;
   final String categoryName;
   const CategoryItem({
     super.key,
     required this.categoryId,
     required this.categoryName,
-    required this.icon,
   });
 
   @override
@@ -23,16 +21,18 @@ class CategoryItem extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
           leading: CircleAvatar(
+            radius: 16,
             backgroundColor: MAIN_APP_COLOR_DARK,
-            child: Icon(
-              icon,
+            child: const Icon(
+              Icons.category,
               color: Colors.white,
+              size: 20,
             ),
           ),
           title: Text(
-            categoryName.capitalize(),
+            categoryName,
             style: GoogleFonts.lato(
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
               color: MAIN_APP_COLOR,
             ),

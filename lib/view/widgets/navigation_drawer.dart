@@ -3,7 +3,6 @@ import 'package:expense_tracker_2024/navigator/navigator.dart';
 import 'package:expense_tracker_2024/view/screens/accounts.dart';
 import 'package:expense_tracker_2024/view/screens/categories.dart';
 import 'package:expense_tracker_2024/view/screens/coming_soon.dart';
-import 'package:expense_tracker_2024/view/widgets/spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';

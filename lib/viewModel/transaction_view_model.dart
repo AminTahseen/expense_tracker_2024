@@ -1,5 +1,7 @@
 import 'package:expense_tracker_2024/model/accounts_model.dart';
+import 'package:expense_tracker_2024/model/category_model.dart';
 import 'package:expense_tracker_2024/repositoryImpl/local/accounts_repo_impl.dart';
+import 'package:expense_tracker_2024/repositoryImpl/local/category_repo_impl.dart';
 import 'package:expense_tracker_2024/repositoryImpl/local/transaction_repo_impl.dart';
 import 'package:expense_tracker_2024/model/transaction_model.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ import 'package:intl/intl.dart';
 class TransactionViewModel extends ChangeNotifier {
   final transactionRepo = TransactionRepoImpl();
   final accountsRepo = AccountsRepoImpl();
+  final categoryRepo = CategoryRepoImpl();
   String _message = "";
   String get message => _message;
 
@@ -28,6 +31,8 @@ class TransactionViewModel extends ChangeNotifier {
 
   int _selectedCategoryIndex = -1;
   int get selectedCategoryIndex => _selectedCategoryIndex;
+  String selectedCategoryId = "";
+  String selectedCategoryName = "";
 
   int _selectedTransactionType = 1;
   int get selectedTransactionType => _selectedTransactionType;
@@ -44,8 +49,10 @@ class TransactionViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setCategoryIndex(int index) {
+  setCategoryIndex(int index, String categoryId, String categoryName) {
     _selectedCategoryIndex = index;
+    selectedCategoryId = categoryId;
+    selectedCategoryName = categoryName;
     notifyListeners();
   }
 
@@ -85,11 +92,11 @@ class TransactionViewModel extends ChangeNotifier {
           amount: selectedTransactionType == 0 ? -parsedAmount : parsedAmount,
           transactionType: selectedTransactionType,
           accountId: selectedAccountId,
-          categoryId: "1",
+          categoryId: selectedCategoryId,
           createdByUserId: "1",
           transactionId: transactionId,
           accountName: selectedAccountName,
-          categoryName: "default",
+          categoryName: selectedCategoryName,
           createdOn: formattedDate,
         );
         print(transactionModel.toString());
@@ -107,15 +114,29 @@ class TransactionViewModel extends ChangeNotifier {
     return accountsRepo.getData();
   }
 
+  Box<CategoryModel> getCategories() {
+    return categoryRepo.getData();
+  }
+
   Box<TransactionModel> getTransactions() {
     return transactionRepo.getData();
   }
 
   clearMessage() {
+    resetData();
     Future.delayed(const Duration(seconds: 2), () {
       setErrorMessage("");
       setMessage("");
     });
+  }
+
+  resetData() {
+    _selectedAccountIndex = -1;
+    selectedAccountId = "";
+    selectedAccountName = "";
+    _selectedCategoryIndex = -1;
+    _selectedTransactionType = 1;
+    notifyListeners();
   }
 
   bool _validate(

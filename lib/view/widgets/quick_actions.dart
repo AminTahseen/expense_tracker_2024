@@ -1,6 +1,7 @@
 import 'package:expense_tracker_2024/constants/colors.dart';
 import 'package:expense_tracker_2024/navigator/navigator.dart';
 import 'package:expense_tracker_2024/view/screens/add_edit_transaction.dart';
+import 'package:expense_tracker_2024/view/screens/coming_soon.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -49,7 +50,12 @@ class QuickActions extends StatelessWidget {
               size: 30,
               color: Colors.black,
             ),
-            onTapClick: () {},
+            onTapClick: () {
+              AppNavigator().onNavigatePush(
+                context,
+                const ComingSoonScreen(),
+              );
+            },
           ),
         ],
       ),

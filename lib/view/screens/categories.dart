@@ -76,13 +76,16 @@ class _CategoriesScreenState extends State<CategoriesScreen>
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.only(top: 10.0, right: 10, left: 10),
             child: Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 color: Colors.white54,
                 border: Border.fromBorderSide(
-                  BorderSide(color: Colors.grey, width: 1),
+                  BorderSide(
+                    color: Color.fromARGB(188, 158, 158, 158),
+                    width: 1,
+                  ),
                 ),
               ),
               child: TabBar(
@@ -104,14 +107,18 @@ class _CategoriesScreenState extends State<CategoriesScreen>
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+              padding: const EdgeInsets.all(0),
               child: TabBarView(
                 controller: _tabController,
                 children: [
                   CategoriesListSection(
-                      categoryType: 1, categoryViewModel: categoryViewModel),
+                    categoryType: 1,
+                    categoryViewModel: categoryViewModel,
+                  ),
                   CategoriesListSection(
-                      categoryType: 0, categoryViewModel: categoryViewModel)
+                    categoryType: 0,
+                    categoryViewModel: categoryViewModel,
+                  )
                 ],
               ),
             ),
@@ -128,9 +135,7 @@ void _settingModalBottomSheet(
     context: context,
     isScrollControlled: true,
     builder: (BuildContext bc) {
-      return AddCategorySheet(
-        categoryViewModel: categoryViewModel,
-      );
+      return const AddCategorySheet();
     },
   );
 }
