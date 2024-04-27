@@ -1,4 +1,4 @@
-# expense_tracker_2024
+# expense_tracker_2024 (In Progress)
 
 An expense tracker app developed using flutter.
 
