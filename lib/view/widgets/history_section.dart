@@ -1,11 +1,8 @@
 import 'package:expense_tracker_2024/constants/colors.dart';
-import 'package:expense_tracker_2024/constants/data.dart';
 import 'package:expense_tracker_2024/model/transaction_model.dart';
 import 'package:expense_tracker_2024/view/widgets/no_data_available.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/adapters.dart';
 
 import 'transaction_item.dart';
 
@@ -55,6 +52,7 @@ class HistorySection extends StatelessWidget {
                         icon: Icons.currency_exchange_rounded,
                         type: data[index].transactionType,
                         accountName: data[index].accountName,
+                        date: data[index].createdOn,
                       );
                     },
                   ),

@@ -3,6 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 
 abstract class AccountsRepo {
   insert(AccountsModel model);
-
   Box<AccountsModel> getData();
+  update(AccountsModel model);
+  AccountsModel getSingleData(String accountId);
 }

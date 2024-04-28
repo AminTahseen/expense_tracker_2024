@@ -16,4 +16,14 @@ class AccountsRepoImpl extends AccountsRepo {
   Box<AccountsModel> getData() {
     return _accountsBox;
   }
+
+  @override
+  update(AccountsModel model) => model.save();
+
+  @override
+  AccountsModel getSingleData(String accountId) {
+    return _accountsBox.values
+        .where((element) => element.accountId == accountId)
+        .first;
+  }
 }

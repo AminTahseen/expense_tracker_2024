@@ -48,7 +48,7 @@ class ExpenseAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => AppNavigator().onNavigatePush(
+            onTap: () => AppNavigator.onNavigatePush(
               context,
               const ComingSoonScreen(),
             ),

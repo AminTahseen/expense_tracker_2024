@@ -49,7 +49,7 @@ class ComingSoonScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () => AppNavigator().onNavigatorPop(context),
+                onPressed: () => AppNavigator.onNavigatorPop(context),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text(

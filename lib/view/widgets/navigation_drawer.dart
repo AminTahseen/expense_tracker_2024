@@ -73,7 +73,7 @@ class AppNavigationDrawer extends StatelessWidget {
 
 _navigate(Widget screenName, BuildContext context) {
   ZoomDrawer.of(context)!.close();
-  AppNavigator().onNavigatePush(context, screenName);
+  AppNavigator.onNavigatePush(context, screenName);
 }
 
 class DrawerItem extends StatelessWidget {

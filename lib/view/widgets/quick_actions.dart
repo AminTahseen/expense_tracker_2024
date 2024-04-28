@@ -37,7 +37,7 @@ class QuickActions extends StatelessWidget {
               color: Colors.black,
             ),
             onTapClick: () {
-              AppNavigator().onNavigatePush(
+              AppNavigator.onNavigatePush(
                 context,
                 const AddEditTransaction(),
               );
@@ -51,7 +51,7 @@ class QuickActions extends StatelessWidget {
               color: Colors.black,
             ),
             onTapClick: () {
-              AppNavigator().onNavigatePush(
+              AppNavigator.onNavigatePush(
                 context,
                 const ComingSoonScreen(),
               );

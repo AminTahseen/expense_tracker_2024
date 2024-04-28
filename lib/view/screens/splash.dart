@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 3), () {
-      AppNavigator().onNavigatePushReplace(context, const ZoomDrawerScreen());
+      AppNavigator.onNavigatePushReplace(context, const ZoomDrawerScreen());
     });
   }
 

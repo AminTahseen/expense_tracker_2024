@@ -45,7 +45,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
               children: [
                 GestureDetector(
                   onTap: () {
-                    AppNavigator().onNavigatorPop(context);
+                    AppNavigator.onNavigatorPop(context);
                   },
                   child: const Icon(
                     Icons.arrow_back,

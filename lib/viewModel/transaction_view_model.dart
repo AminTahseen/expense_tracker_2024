@@ -76,7 +76,12 @@ class TransactionViewModel extends ChangeNotifier {
     String amount,
   ) async {
     try {
-      if (_validate(amount, selectedTransactionType, selectedAccountId, "1")) {
+      if (_validate(
+        amount,
+        selectedTransactionType,
+        selectedAccountId,
+        selectedCategoryId,
+      )) {
         final parsedAmount = double.parse(amount);
         var uuid = const Uuid();
         var transactionId =
@@ -99,10 +104,27 @@ class TransactionViewModel extends ChangeNotifier {
           categoryName: selectedCategoryName,
           createdOn: formattedDate,
         );
-        print(transactionModel.toString());
-        transactionRepo.insert(transactionModel);
-        setMessage("Transaction Created Successfully");
-        clearMessage();
+        final obj = accountsRepo.getSingleData(selectedAccountId);
+        if (selectedTransactionType == 0) {
+          final updatedBalance = obj.openingBalance - parsedAmount;
+          if (updatedBalance > 0) {
+            transactionRepo.insert(transactionModel);
+            obj.openingBalance = updatedBalance;
+            accountsRepo.update(obj);
+            setMessage("Transaction Created Successfully");
+            clearMessage();
+          } else {
+            setErrorMessage("Not Enough Balance in this account");
+          }
+        } else {
+          final updatedBalance = obj.openingBalance + parsedAmount;
+          transactionRepo.insert(transactionModel);
+          obj.openingBalance = updatedBalance;
+          accountsRepo.update(obj);
+          setMessage("Transaction Created Successfully");
+          clearMessage();
+        }
+
         setLoader(false);
       }
     } catch (e) {
@@ -135,6 +157,8 @@ class TransactionViewModel extends ChangeNotifier {
     selectedAccountId = "";
     selectedAccountName = "";
     _selectedCategoryIndex = -1;
+    selectedCategoryId = "";
+    selectedCategoryName = "";
     _selectedTransactionType = 1;
     notifyListeners();
   }
@@ -146,15 +170,16 @@ class TransactionViewModel extends ChangeNotifier {
     String categoryId,
   ) {
     if (amount.isEmpty || amount == "0.0") {
-      setErrorMessage("Amount must be provided");
+      setErrorMessage("Enter valid amount please");
       return false;
     } else if (accountId == "") {
       setErrorMessage("Select an account please");
       return false;
     } else if (categoryId == "") {
+      setErrorMessage("Select a category please");
       return false;
+    } else {
+      return true;
     }
-
-    return true;
   }
 }

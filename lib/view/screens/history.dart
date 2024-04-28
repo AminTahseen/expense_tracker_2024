@@ -71,7 +71,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         elevation: 2,
                         shape: const CircleBorder(),
                         onPressed: () {
-                          AppNavigator().onNavigatePush(
+                          AppNavigator.onNavigatePush(
                             context,
                             const AddEditTransaction(),
                           );

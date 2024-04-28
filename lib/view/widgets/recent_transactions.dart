@@ -56,6 +56,7 @@ class RecentTransactions extends StatelessWidget {
                               icon: Icons.currency_exchange_rounded,
                               type: data[index].transactionType,
                               accountName: data[index].accountName,
+                              date: data[index].createdOn,
                             );
                           },
                         )

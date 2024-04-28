@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppNavigator {
-  void onNavigatePush(BuildContext context, Widget screen) {
+  static void onNavigatePush(BuildContext context, Widget screen) {
     Navigator.push(
       context,
       PageRouteBuilder(
@@ -13,11 +13,11 @@ class AppNavigator {
     );
   }
 
-  void onNavigatorPop(BuildContext context) {
+  static void onNavigatorPop(BuildContext context) {
     Navigator.pop(context);
   }
 
-  void onNavigatePushReplace(BuildContext context, Widget screen) {
+  static void onNavigatePushReplace(BuildContext context, Widget screen) {
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(

@@ -16,3 +16,24 @@ extension StringExtensions on String {
         .join(' ');
   }
 }
+
+String convertDateToReadable(String date) {
+  var inputFormat = DateFormat('yyyy-MM-dd');
+  var outputFormat = DateFormat('MMMM d, yyyy');
+
+  DateTime parsedDate = inputFormat.parse(date);
+  DateTime now = DateTime.now();
+  DateTime yesterday = now.subtract(const Duration(days: 1));
+
+  if (parsedDate.year == now.year &&
+      parsedDate.month == now.month &&
+      parsedDate.day == now.day) {
+    return "Performed Today";
+  } else if (parsedDate.year == yesterday.year &&
+      parsedDate.month == yesterday.month &&
+      parsedDate.day == yesterday.day) {
+    return "Performed Yesterday";
+  } else {
+    return 'Performed on ${outputFormat.format(parsedDate)}';
+  }
+}

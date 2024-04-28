@@ -38,7 +38,7 @@ class _AccountsScreenState extends State<AccountsScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    AppNavigator().onNavigatorPop(context);
+                    AppNavigator.onNavigatorPop(context);
                   },
                   child: const Icon(
                     Icons.arrow_back,

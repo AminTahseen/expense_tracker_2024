@@ -3,7 +3,6 @@ import 'package:expense_tracker_2024/model/accounts_model.dart';
 import 'package:expense_tracker_2024/model/category_model.dart';
 import 'package:expense_tracker_2024/model/transaction_model.dart';
 import 'package:expense_tracker_2024/view/screens/splash.dart';
-import 'package:expense_tracker_2024/view/screens/zoom_drawer_screen.dart';
 import 'package:expense_tracker_2024/viewModel/accounts_view_model.dart';
 import 'package:expense_tracker_2024/viewModel/category_view_model.dart';
 import 'package:expense_tracker_2024/viewModel/transaction_view_model.dart';

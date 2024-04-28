@@ -9,6 +9,7 @@ class TransactionItem extends StatelessWidget {
   final double amount;
   final int type;
   final String accountName;
+  final String date;
   const TransactionItem({
     super.key,
     required this.category,
@@ -16,6 +17,7 @@ class TransactionItem extends StatelessWidget {
     required this.icon,
     required this.type,
     required this.accountName,
+    required this.date,
   });
 
   @override
@@ -29,24 +31,18 @@ class TransactionItem extends StatelessWidget {
         ),
       ),
       title: Text(
-        category,
+        category.capitalize(),
         style: GoogleFonts.lato(
             fontSize: 16, fontWeight: FontWeight.bold, color: MAIN_APP_COLOR),
       ),
       subtitle: type == 0
-          ? Text(
+          ? _subtitleSection(
               '${numToCurrency(amount, '0')} deducted from $accountName',
-              style: GoogleFonts.lato(
-                fontStyle: FontStyle.italic,
-                color: TEXT_GREY_DARK,
-              ),
+              date,
             )
-          : Text(
+          : _subtitleSection(
               '${numToCurrency(amount, '0')} added in $accountName',
-              style: GoogleFonts.lato(
-                fontStyle: FontStyle.italic,
-                color: TEXT_GREY_DARK,
-              ),
+              date,
             ),
       trailing: type == 0
           ? const Icon(
@@ -59,4 +55,28 @@ class TransactionItem extends StatelessWidget {
             ),
     );
   }
+}
+
+//
+Column _subtitleSection(String text1, String date) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        text1,
+        style: GoogleFonts.lato(
+          fontStyle: FontStyle.italic,
+          color: TEXT_GREY_DARK,
+        ),
+      ),
+      Text(
+        convertDateToReadable(date),
+        style: GoogleFonts.lato(
+          color: TEXT_GREY_DARK,
+          fontWeight: FontWeight.bold,
+        ),
+      )
+    ],
+  );
 }

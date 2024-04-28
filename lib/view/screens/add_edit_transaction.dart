@@ -135,7 +135,7 @@ class _AddEditTransactionState extends State<AddEditTransaction> {
             children: [
               GestureDetector(
                 onTap: () => {
-                  AppNavigator().onNavigatorPop(context),
+                  AppNavigator.onNavigatorPop(context),
                   transactionViewModel.resetData(),
                   amountTextController.clear()
                 },
