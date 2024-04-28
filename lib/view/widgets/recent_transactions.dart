@@ -30,9 +30,9 @@ class RecentTransactions extends StatelessWidget {
             ),
           ),
           ConstrainedBox(
-            constraints: const BoxConstraints(
+            constraints: BoxConstraints(
               minHeight: 35.0,
-              maxHeight: 180.0,
+              maxHeight: MediaQuery.of(context).size.height * 0.26,
             ),
             child: Scrollbar(
               trackVisibility: true,

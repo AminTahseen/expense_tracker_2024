@@ -1,11 +1,18 @@
 import 'package:expense_tracker_2024/constants/colors.dart';
+import 'package:expense_tracker_2024/helpers/helpers.dart';
 import 'package:expense_tracker_2024/model/UIObjects/bar_data.dart';
+import 'package:expense_tracker_2024/model/category_model.dart';
 import 'package:expense_tracker_2024/view/widgets/no_data_available.dart';
 import 'package:expense_tracker_2024/view/widgets/spacing.dart';
 import 'package:expense_tracker_2024/view/widgets/tab_item.dart';
+import 'package:expense_tracker_2024/viewModel/category_view_model.dart';
+import 'package:expense_tracker_2024/viewModel/charts_view_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
 
 class ChartsScreen extends StatefulWidget {
   const ChartsScreen({super.key});
@@ -27,6 +34,7 @@ class _ChartsScreenState extends State<ChartsScreen>
 
   @override
   Widget build(BuildContext context) {
+    final ChartsViewModel chartsViewModel = context.watch<ChartsViewModel>();
     return Scaffold(
       backgroundColor: APP_BG_WHITE,
       body: Column(
@@ -80,12 +88,14 @@ class _ChartsScreenState extends State<ChartsScreen>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: const [
-                ChartSection(
-                  chartType: 0,
-                ),
+              children: [
                 ChartSection(
                   chartType: 1,
+                  viewModel: chartsViewModel,
+                ),
+                ChartSection(
+                  chartType: 0,
+                  viewModel: chartsViewModel,
                 ),
               ],
             ),
@@ -98,7 +108,9 @@ class _ChartsScreenState extends State<ChartsScreen>
 
 class ChartSection extends StatelessWidget {
   final int chartType;
-  const ChartSection({super.key, required this.chartType});
+  final ChartsViewModel viewModel;
+  const ChartSection(
+      {super.key, required this.chartType, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -113,21 +125,29 @@ class ChartSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
             ),
             width: MediaQuery.of(context).size.width,
-            margin:
-                const EdgeInsets.only(left: 10, right: 20, top: 10, bottom: 20),
-            padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-            height: 310,
+            margin: const EdgeInsets.only(
+              left: 10,
+              right: 10,
+            ),
+            padding: const EdgeInsets.only(
+              top: 10.0,
+            ),
+            height: MediaQuery.of(context).size.height * 0.4,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 250,
-                  child: BarChartIncomeExpense(
+                Container(
+                  padding: const EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.only(bottom: 5),
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  width: MediaQuery.of(context).size.width,
+                  child: const BarChartIncomeExpense(
                     summary: [10.40, 20.50, 42.50, 90.30, 60.40],
                   ),
                 ),
-                const AddSpacing(),
                 Text(
-                  chartType == 0 ? "Income Breakdown" : "Expense Breakdown",
+                  chartType == 1 ? "Income Breakdown" : "Expense Breakdown",
                   style: GoogleFonts.lato(
                     color: TEXT_GREY_DARK,
                   ),
@@ -146,8 +166,73 @@ class ChartSection extends StatelessWidget {
               ),
             ),
           ),
-          const NoDataAvailable(message: "No Categories Yet")
+          ValueListenableBuilder<Box<CategoryModel>>(
+            valueListenable: viewModel.getCategories().listenable(),
+            builder: (context, box, _) {
+              var data = box.values.toList().cast<CategoryModel>();
+              var data2 = data
+                  .where((element) => element.categoryType == chartType)
+                  .toList()
+                  .cast<CategoryModel>();
+              return GenerateCategoriesList(
+                list: data2,
+              );
+            },
+          )
         ],
+      ),
+    );
+  }
+}
+
+class GenerateCategoriesList extends StatelessWidget {
+  final List<CategoryModel> list;
+  const GenerateCategoriesList({super.key, required this.list});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 10.0),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: 35.0,
+          maxHeight: MediaQuery.of(context).size.height * 0.3,
+        ),
+        child: Scrollbar(
+          trackVisibility: true,
+          child: ListView.separated(
+            shrinkWrap: true,
+            separatorBuilder: (context, index) =>
+                const Divider(height: 1, color: Colors.black12),
+            padding: const EdgeInsets.all(0.0),
+            // Let the ListView know how many items it needs to build.
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 20.0, top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      list[index].categoryName,
+                      style: GoogleFonts.lato(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: MAIN_APP_COLOR_DARK,
+                      ),
+                    ),
+                    Text(
+                      "PKR 0.00",
+                      style: GoogleFonts.lato(
+                        color: MAIN_APP_COLOR,
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }

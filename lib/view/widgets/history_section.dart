@@ -32,9 +32,9 @@ class HistorySection extends StatelessWidget {
         ),
         data.isNotEmpty
             ? ConstrainedBox(
-                constraints: const BoxConstraints(
+                constraints: BoxConstraints(
                   minHeight: 35.0,
-                  maxHeight: 200.0,
+                  maxHeight: MediaQuery.of(context).size.height * 0.3,
                 ),
                 child: Scrollbar(
                   trackVisibility: true,

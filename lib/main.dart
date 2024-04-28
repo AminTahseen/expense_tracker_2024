@@ -5,6 +5,7 @@ import 'package:expense_tracker_2024/model/transaction_model.dart';
 import 'package:expense_tracker_2024/view/screens/splash.dart';
 import 'package:expense_tracker_2024/viewModel/accounts_view_model.dart';
 import 'package:expense_tracker_2024/viewModel/category_view_model.dart';
+import 'package:expense_tracker_2024/viewModel/charts_view_model.dart';
 import 'package:expense_tracker_2024/viewModel/transaction_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => TransactionViewModel()),
         ChangeNotifierProvider(create: (_) => AccountsViewModel()),
         ChangeNotifierProvider(create: (_) => CategoryViewModel()),
+        ChangeNotifierProvider(create: (_) => ChartsViewModel()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
