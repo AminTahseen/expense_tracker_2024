@@ -2,10 +2,9 @@ import 'package:expense_tracker_2024/constants/colors.dart';
 import 'package:expense_tracker_2024/helpers/helpers.dart';
 import 'package:expense_tracker_2024/model/UIObjects/bar_data.dart';
 import 'package:expense_tracker_2024/model/category_model.dart';
-import 'package:expense_tracker_2024/view/widgets/no_data_available.dart';
-import 'package:expense_tracker_2024/view/widgets/spacing.dart';
+import 'package:expense_tracker_2024/model/transaction_model.dart';
+import 'package:expense_tracker_2024/view/widgets/category_item.dart';
 import 'package:expense_tracker_2024/view/widgets/tab_item.dart';
-import 'package:expense_tracker_2024/viewModel/category_view_model.dart';
 import 'package:expense_tracker_2024/viewModel/charts_view_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +46,7 @@ class _ChartsScreenState extends State<ChartsScreen>
             padding: const EdgeInsets.only(
                 top: 50.0, left: 20, right: 20, bottom: 10.0),
             child: Text(
-              "Charts",
+              "Statistics",
               style: GoogleFonts.lato(
                 color: Colors.white,
                 fontSize: 24,
@@ -133,23 +132,48 @@ class ChartSection extends StatelessWidget {
               top: 10.0,
             ),
             height: MediaQuery.of(context).size.height * 0.4,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Stack(
               children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 10),
-                  margin: const EdgeInsets.only(bottom: 5),
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  width: MediaQuery.of(context).size.width,
-                  child: const BarChartIncomeExpense(
-                    summary: [10.40, 20.50, 42.50, 90.30, 60.40],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(top: 10),
+                      margin: const EdgeInsets.only(bottom: 5),
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      width: MediaQuery.of(context).size.width,
+                      child: const BarChartIncomeExpense(
+                        summary: [20.0, 30.0, 40.0, 50.0, 60.0],
+                      ),
+                    ),
+                    Text(
+                      chartType == 1
+                          ? "Top 5 Income Breakdown"
+                          : "Top 5 Expense Breakdown",
+                      style: GoogleFonts.lato(
+                        color: TEXT_GREY_DARK,
+                      ),
+                    )
+                  ],
                 ),
-                Text(
-                  chartType == 1 ? "Income Breakdown" : "Expense Breakdown",
-                  style: GoogleFonts.lato(
-                    color: TEXT_GREY_DARK,
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF0a0a0a).withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(
+                      10,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "In Development",
+                      style: GoogleFonts.lato(
+                          fontSize: 25,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 )
               ],
@@ -174,8 +198,15 @@ class ChartSection extends StatelessWidget {
                   .where((element) => element.categoryType == chartType)
                   .toList()
                   .cast<CategoryModel>();
+              var transactionList = viewModel
+                  .getTransactions()
+                  .values
+                  .toList()
+                  .where((element) => element.transactionType == chartType)
+                  .toList();
               return GenerateCategoriesList(
                 list: data2,
+                transactionList: transactionList,
               );
             },
           )
@@ -187,7 +218,13 @@ class ChartSection extends StatelessWidget {
 
 class GenerateCategoriesList extends StatelessWidget {
   final List<CategoryModel> list;
-  const GenerateCategoriesList({super.key, required this.list});
+  final List<TransactionModel> transactionList;
+
+  const GenerateCategoriesList({
+    super.key,
+    required this.list,
+    required this.transactionList,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -208,31 +245,52 @@ class GenerateCategoriesList extends StatelessWidget {
             // Let the ListView know how many items it needs to build.
             itemCount: list.length,
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 20.0, top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      list[index].categoryName,
-                      style: GoogleFonts.lato(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: MAIN_APP_COLOR_DARK,
-                      ),
-                    ),
-                    Text(
-                      "PKR 0.00",
-                      style: GoogleFonts.lato(
-                        color: MAIN_APP_COLOR,
-                      ),
-                    )
-                  ],
-                ),
+              double sum = transactionList
+                  .where(
+                      (element) => element.categoryId == list[index].categoryId)
+                  .toList()
+                  .fold(
+                      0, (previousValue, item) => previousValue + item.amount);
+              return ChartCategoryItem(
+                item: list[index],
+                totalCategorySpent: sum,
               );
             },
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ChartCategoryItem extends StatelessWidget {
+  final CategoryModel item;
+  final double totalCategorySpent;
+  const ChartCategoryItem(
+      {super.key, required this.item, required this.totalCategorySpent});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20.0, top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            item.categoryName,
+            style: GoogleFonts.lato(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: MAIN_APP_COLOR_DARK,
+            ),
+          ),
+          Text(
+            numToCurrency(totalCategorySpent, "0"),
+            style: GoogleFonts.lato(
+              color: MAIN_APP_COLOR,
+            ),
+          )
+        ],
       ),
     );
   }

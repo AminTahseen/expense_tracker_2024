@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String numToCurrency(double number, String digits) {
   var formatter = NumberFormat.currency(locale: 'ur_PK', symbol: 'PKR ');
@@ -36,4 +37,14 @@ String convertDateToReadable(String date) {
   } else {
     return 'Performed on ${outputFormat.format(parsedDate)}';
   }
+}
+
+Future<String> _getCurrencyLocale() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getString("currency_locale") ?? "ur_PK";
+}
+
+Future<String> _getCurrencySymbol() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getString("currency_symbol") ?? "PKR ";
 }
